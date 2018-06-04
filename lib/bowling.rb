@@ -14,6 +14,8 @@ class Bowling
 
     if strike?(roll_index)
       score(roll_index + 1, frame + 1) + 10 + strike_bonus(roll_index)
+    elsif spare?(roll_index)
+      score(roll_index + 2, frame + 1) + 10 + spare_bonus(roll_index)
     else
       score(roll_index + 2, frame + 1) + total_frame(roll_index)
     end
@@ -23,8 +25,20 @@ class Bowling
     roll_at(roll_index) + roll_at(roll_index + 1)
   end
 
+  def spare_bonus(roll_index)
+    roll_at(roll_index + 2)
+  end
+
   def strike_bonus(roll_index)
     roll_at(roll_index + 1) + roll_at(roll_index + 2)
+  end
+
+  def spare?(roll_index)
+    total_frame(roll_index) == 10
+  end
+
+  def strike?(roll_index)
+    roll_at(roll_index) == 10
   end
 
   def roll_at(index)
