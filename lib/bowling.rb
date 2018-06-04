@@ -11,5 +11,23 @@ class Bowling
 
   def score(roll_index = 0, frame = 1)
     return 0 if frame > 10
+
+    if strike?(roll_index)
+      score(roll_index + 1, frame + 1) + 10 + strike_bonus(roll_index)
+    else
+      score(roll_index + 2, frame + 1) + total_frame(roll_index)
+    end
+  end
+
+  def total_frame(roll_index)
+    roll_at(roll_index) + roll_at(roll_index + 1)
+  end
+
+  def strike_bonus(roll_index)
+    roll_at(roll_index + 1) + roll_at(roll_index + 2)
+  end
+
+  def roll_at(index)
+    rolls[index] || 0
   end
 end
